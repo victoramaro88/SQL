@@ -1,0 +1,1 @@
+SELECT * FROM DB_EFETIVO.SchEFETIVO.Vw_Efetivo_Cursos

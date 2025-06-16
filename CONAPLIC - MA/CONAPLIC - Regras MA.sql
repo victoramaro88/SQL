@@ -1,0 +1,39 @@
+SELECT SftCod, SftTipCod, SftClsCod, OpmCbIdf, SftNom, SftDes, SftAtvIdc, SftSgl, SftCpfIclNum, SftIclDat, CnmAreCod
+FROM DB_CONAPLIC.SchCTRAPL.SFT
+WHERE SftNom LIKE '%gestão%'
+--WHERE SftCod = 118
+;
+
+
+SELECT * FROM DB_CONAPLIC.SchCTRAPL.MNUSFT
+--WHERE MnuSftNom LIKE 'Menu%'
+WHERE SftCod = 121
+;
+
+SELECT MnuSftFndCod, MnuSftCod, MnuSftFndPaiCod, MnuSftPaiCod, MnuSftFndNom, MnuSftFndEnd, MnuSftFndAtvIdc
+FROM DB_CONAPLIC.SchCTRAPL.MNUSFTFND
+WHERE MnuSftCod IN (192, 193, 194)
+--WHERE MnuSftFndNom LIKE 'Procedimento%'
+;
+
+SELECT * FROM DB_MA.SchMA.GRPACSFND
+WHERE MnuSftCod IN (192, 193, 194)
+;
+
+SELECT * FROM DB_MA.SchMA.GRPACS
+WHERE GrpAcsCod IN (157, 158)
+;
+
+SELECT * FROM DB_MA.SchMA.GRPACSRGA
+WHERE GrpAcsCod IN (157, 158)
+;
+
+SELECT * FROM DB_MA.SchMA.GRPACSRGAUOR
+WHERE GrpAcsRgaCod IN (157, 158)
+;
+
+SELECT AbeCtrCod, AbeCtrNom
+FROM DB_CONAPLIC.SchCTRAPL.ABECTR;
+
+SELECT CnmAreCod, CnmArePaiCod, CnmAreNom, CnmAreOrdNum
+FROM DB_CORP_CCB.SchCRPCCB.CNMARE;

@@ -1,0 +1,5 @@
+SELECT ID, OcrNum, OcrDat, CadCod, OcrEnd, DisplayOcrDat, OcrHr, GB
+FROM DB_SDO.dbo.VW_COMPLEMENTO_OCORRENCIA_INCENDIO
+WHERE GB = '2.GB'
+ORDER by OcrDat 
+;

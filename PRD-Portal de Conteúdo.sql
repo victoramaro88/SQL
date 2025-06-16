@@ -1,0 +1,47 @@
+-- MUDANÇA DE LINK DAS PÁGINAS DO ORGANOGRAMA
+SELECT UorOrgCod, UorCod, UorOrgLabel, UorOrgTitle, Link, UorOrgAtv
+FROM DB_PORTAL_CONTEUDO.SchPORCOU.UorOrg;
+
+-- CONSULTA DE POST PARA MUDANÇA DE PESIDF
+SELECT 
+	PES.PesNom,
+	POS.PostCod, POS.TltPost, POS.TxtPost, POS.Pesidf, POS.TagPsq, POS.DtaIni, POS.DtaFim, POS.LocPostCod, POS.Res, POS.Link
+	, POS.AutTrbAcd, POS.FlVgo, POS.DtaFat, POS.AnoIni, POS.AnoFim, POS.DtaCad, POS.DtaAlt, POS.MnuCod, POS.OpcPostDesc, POS.FlAtv
+	, POS.StsPostCod, POS.OpcPostCod, POS.CatPostCod, POS.AnoRef, POS.UorCod, POS.LglcPostCod, POS.MdaPostCod, POS.PosGrad, POS.DtaFatFim
+	, POS.FlDiaTodo, POS.SubCatPostCod, POS.PesUorCod, POS.PesUorNome
+FROM DB_PORTAL_CONTEUDO.SchPORCOU.Post POS
+INNER JOIN DB_CORP_CCB.SchCRPCCB.PES PES ON PES.PesIdf = POS.Pesidf 
+WHERE PostCod IN (1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104);
+
+--CONSULTA DE PESSOA PELO PESID (CONFIRMAR SE É A MESMA PESSOA)
+SELECT PesIdf, PesNom, PesSclNom, PesTipCod, PesNasDat, PesCpfMigNum, PesIclDat
+FROM DB_CORP_CCB.SchCRPCCB.PES
+WHERE PesIdf = 7034;
+
+--TRANSACTION PARA UPDATE DOS PESIDF DOS POSTCOD
+BEGIN TRY
+    BEGIN TRANSACTION;
+    UPDATE DB_PORTAL_CONTEUDO.SchPORCOU.Post
+	SET Pesidf=7034
+	WHERE PostCod IN (1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104);
+    IF @@ROWCOUNT > 0
+    BEGIN
+        SELECT *
+	    FROM DB_PORTAL_CONTEUDO.SchPORCOU.Post
+	    WHERE PostCod IN (1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104);
+        COMMIT TRANSACTION;
+        PRINT 'Transação confirmada com sucesso.';
+    END
+    ELSE
+    BEGIN
+        ROLLBACK TRANSACTION;
+        PRINT 'Nenhuma linha foi afetada. Transação revertida.';
+    END
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+    BEGIN
+        ROLLBACK TRANSACTION;
+    END
+    PRINT 'Erro encontrado: ' + ERROR_MESSAGE();
+END CATCH;

@@ -1,0 +1,142 @@
+--80617	THIAGO FREITAS DE ALMEIDA
+
+SELECT FUNCOD, FUNDES, FunSit
+FROM DB_RHCB.SchRH.FUN
+WHERE FUNDES  LIKE '%SVSCI%'
+;
+
+SELECT * FROM DB_RHCB.SchRH.EFECBFUN EFECBFUN WHERE EFECBFUN.PesIdf = 3758
+
+SELECT 
+	FUN.FUNCOD, FUN.FUNDES, MNU.MenuCod, MNU.Menu, OPE.OPECOD, OPE.OPEDES, OPE.SIGOPE, FUNOPE.FUNOPESIT
+FROM DB_RHCB.SchRH.EFECBFUN EFECBFUN WITH(NOLOCK)
+JOIN DB_RHCB.SchRH.FUN FUN WITH(NOLOCK) ON FUN.FUNCOD = EFECBFUN.FUNCOD
+JOIN DB_RHCB.SchRH.FUNOPE FUNOPE WITH(NOLOCK) ON FUNOPE.FUNCOD = FUN.FUNCOD
+JOIN DB_RHCB.SchRH.Menu MNU WITH(NOLOCK) ON MNU.MenuCod = FUNOPE.MenuCod
+JOIN DB_RHCB.SchRH.OPE OPE WITH(NOLOCK) ON OPE.OPECOD = FUNOPE.OPECOD
+WHERE PesIdf = 3758 AND FUN.FunSit = 'A'
+;
+
+-------
+
+SELECT MenuCod, Menu
+FROM DB_RHCB.SchRH.Menu;
+
+SELECT OPECOD, OPEDES, SIGOPE
+FROM DB_RHCB.SchRH.OPE WHERE OPEDES LIKE '%percen%';
+
+SELECT FUNOPECOD, OPECOD, FUNCOD, MenuCod, FUNOPESIT
+FROM DB_RHCB.SchRH.FUNOPE;
+
+SELECT FUN.FUNCOD, FUN.FUNDES, Menu.MenuCod, Menu.Menu, OPE.OPECOD, OPE.OPEDES, OPE.SIGOPE
+FROM DB_RHCB.SchRH.FUNOPE FUNOPE
+JOIN DB_RHCB.SchRH.FUN FUN ON FUN.FUNCOD = FUNOPE.FUNCOD
+JOIN DB_RHCB.SchRH.Menu Menu ON Menu.MenuCod = FUNOPE.MenuCod
+JOIN DB_RHCB.SchRH.OPE OPE ON OPE.OPECOD = FUNOPE.OPECOD
+WHERE FUN.FUNCOD = 250
+;
+
+
+INSERT INTO DB_RHCB.SchRH.FUNOPE
+(FUNCOD, MenuCod, OPECOD, FUNOPESIT)
+VALUES
+--Chefe de Vistoria do SvSCI
+/*(248, 50, 19, 1)
+(248, 16, 81, 1)
+(248, 18, 119, 1),
+(248, 18, 101, 1),
+(248, 18, 102, 1),
+(248, 18, 24, 1),
+(248, 18, 105, 1),
+(248, 18, 118, 1),
+(248, 18, 98, 1),
+(248, 18, 116, 1),
+(248, 18, 117, 1),
+(248, 18, 99, 1),
+(248, 18, 128, 1),
+(248, 18, 104, 1),
+(248, 20, 126, 1),
+(248, 20, 92, 1),
+(248, 6, 31, 1),
+(248, 6, 34, 1)
+(248, 1, 37, 1)*/
+--Auxiliar de Protocolo e Arquivo do SvSCI
+/*(257, 15, 10, 1),
+(257, 15, 5, 1),
+(257, 15, 90, 1),
+(257, 15, 91, 1),
+(257, 15, 115, 1),
+(257, 15, 124, 1),
+(257, 15, 93, 1),
+(257, 2, 120, 1),
+(257, 7, 29, 1),
+(257, 17, 109, 1),
+(257, 17, 66, 1),
+(257, 17, 36, 1),
+(257, 17, 114, 1),
+(257, 17, 69, 1),
+(257, 17, 70, 1),
+(257, 1, 1, 1)*/
+--Chefe de DAT/SAT/NAT do SvSCI
+/*(250, 15, 106, 1),
+(250, 15, 16, 1),
+(250, 15, 87, 1),
+(250, 15, 110, 1),
+(250, 15, 22, 1),
+(250, 15, 88, 1),
+(250, 13, 111, 1),
+(250, 10, 43, 1),
+(250, 10, 18, 1),
+(250, 8, 40, 1),
+(250, 11, 19, 1),
+(250, 16, 51, 1),
+(250, 16, 11, 1),
+(250, 16, 6, 1),
+(250, 6, 31, 1),
+(250, 6, 34, 1),
+(250, 1, 37, 1),
+(250, 18, 119, 1),
+(250, 18, 101, 1),
+(250, 18, 102, 1),
+(250, 18, 24, 1),
+(250, 18, 105, 1),
+(250, 18, 118, 1),
+(250, 18, 98, 1),
+(250, 18, 116, 1),
+(250, 18, 117, 1),
+(250, 18, 99, 1),
+(250, 18, 128, 1),
+(250, 18, 104, 1)*/
+;
+
+
+
+SELECT OPECOD, OPEDES, SIGOPE
+FROM DB_RHCB.SchRH.OPE WHERE OPEDES LIKE '%isen%';
+
+SELECT MenuCod, Menu
+FROM DB_RHCB.SchRH.Menu;
+
+/*
+INSERT INTO DB_RHCB.SchRH.Menu (Menu)
+VALUES
+('Análise'),
+('Análsie'),
+('Configuração'),
+('Consulta'),
+('Consultas'),
+('CT'),
+('CTAA'),
+('CTO'),
+('CTPI'),
+('CTUI'),
+('FAT'),
+('FAT C'),
+('Fiscalização'),
+('Licença'),
+('Protocolo'),
+('Relatórios'),
+('Vistoria'),
+('VRE')
+;
+*/

@@ -1,0 +1,20 @@
+SELECT PostCod, TltPost, TxtPost, Pesidf, TagPsq, DtaIni, DtaFim, LocPostCod, Res, Link, AutTrbAcd, FlVgo, DtaFat, AnoIni, AnoFim, DtaCad, DtaAlt, MnuCod, OpcPostDesc, FlAtv, StsPostCod, OpcPostCod, CatPostCod, AnoRef, UorCod, LglcPostCod, MdaPostCod, PosGrad, DtaFatFim, FlDiaTodo
+FROM DB_PORTAL_CONTEUDO.SchPORCOU.Post
+WHERE PostCod IN (751, 752, 753, 754, 757, 759, 760, 761, 762, 763, 764)
+--WHERE Pesidf = 6561 AND CatPostCod = 41 
+--and TltPost like '%ESTRATÉGIA PARA REFINANCIAMENTO DOS SERVIÇOS DE BOMBEIRO, EM FACE DA REPERCUSSÃO GERAL DA DECISÃO DO STF, QUANTO À INCONSTITUCIONALIDADE DA COBRANÇA D%';
+
+SELECT MdaPostCod, TltMdaPost, TxtMdaPost, PostCod, FlAtv, TipMdaPostCod, DtaAlt, FLTipView, Pesidf, CatMdaCod
+FROM DB_PORTAL_CONTEUDO.SchPORCOU.MdaPost
+--WHERE TltMdaPost = 'FICHAS-DE-RESGATE-PEUGEOT.PDF'
+--WHERE PostCod = 616
+;
+
+SELECT 
+	--*
+	POST.PostCod, POST.AutTrbAcd, POST.TltPost, POST.PosGrad
+	, MDAPOST.MdaPostCod, MDAPOST.TltMdaPost, MDAPOST.TxtMdaPost 
+FROM DB_PORTAL_CONTEUDO.SchPORCOU.Post AS POST
+INNER JOIN DB_PORTAL_CONTEUDO.SchPORCOU.MdaPost AS MDAPOST ON MDAPOST.PostCod = POST.PostCod
+--WHERE MDAPOST.TltMdaPost = 'FICHAS-DE-RESGATE-PEUGEOT.PDF'
+WHERE POST.PostCod IN (751, 752, 753, 754, 757, 759, 760, 761, 762, 763, 764)
