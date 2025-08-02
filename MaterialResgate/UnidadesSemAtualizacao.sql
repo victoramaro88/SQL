@@ -7,7 +7,7 @@ WHERE UOR.UorOpmNome = '13.GB' AND UOR.UorOpmAtvIdc = 1
 	AND CAST(Estoque.EstCadDat AS DATE) < CAST('2025-07-07' AS DATE)
 GROUP BY UOR.UorOpmNome, UOR.UorSGBNome, UOR.UorNome, Estoque.EstCadDat
 ORDER BY UOR.UorSGBNome, Estoque.EstCadDat
-;
+; 
 
 
 
