@@ -1,11 +1,11 @@
 SELECT * FROM DB_Visitatus.dbo.Usuario
+WHERE usuNome LIKE '%Mathias%'
 ORDER BY usuNome;
 
 SELECT * FROM DB_Visitatus.dbo.PerfilUsuario
-where usucodi = 154;
-
-SELECT * FROM DB_Visitatus.dbo.PerfilUsuario
-order by peucodi desc
+where usucodi IN (43);
+--ORDER BY peUCodi DESC
+;
 
 --==============================================================================================================================
 
@@ -45,7 +45,9 @@ where ritCodi = 3
 
 SELECT * FROM DB_Visitatus.dbo.GestaoCargos; 
 
-SELECT * FROM DB_Visitatus.dbo.Usuario order by usuNome;
+SELECT * FROM DB_Visitatus.dbo.Usuario 
+where usuNCIM = '274536'
+order by usuNome;
 
 SELECT * FROM DB_Visitatus.dbo.PerfilUsuario;
 

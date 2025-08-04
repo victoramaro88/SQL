@@ -19,7 +19,7 @@ JOIN DB_Visitatus.dbo.Loja Loj WITH(NOLOCK) ON Loj.lojCodi = Pre.lojCodi
 --where Usr.usuCodi IN (76, 135);
 
 SELECT * FROM DB_Visitatus.dbo.Presenca
-where usuCodi IN (76, 135);
+where usuCodi IN (1);
 
 
 
