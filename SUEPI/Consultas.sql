@@ -7,7 +7,7 @@ AND Material LIKE '%Bota%'
 SELECT id_item, descr_item, id_ativ, id_servico, genero, id_grupo, imagem, foto, cod_grupo, ativo, usuario, data_criacao, durabilidade, cod_grupo_pessoas, cod_categoria
 FROM ROMANEIO.dbo.tb_item_romaneio
 WHERE Ativo = 1
-AND descr_item LIKE '%Bota%';
+--AND descr_item LIKE '%Bota%';
 
 
 SELECT
@@ -26,3 +26,37 @@ WHERE opm_almox = '13.GB'
 ;
 
 
+
+
+SELECT id_tam, id_item, tamanho, exibe
+FROM ROMANEIO.dbo.tb_tamanho;
+
+
+
+
+
+--> CONSULTA MILITARES COM ATUALIZAÇÃO PENDENTE
+SELECT
+	*
+FROM ROMANEIO.dbo.tb_rexromaneio rexRom WITH(NOLOCK)
+WHERE rexRom.re = 141499
+
+
+
+SELECT
+	*
+FROM ROMANEIO.dbo.tb_rexromaneio rexRom WITH(NOLOCK)
+WHERE rexRom.re = 109193
+
+
+
+
+SELECT id_item, descr_item, id_ativ, id_servico, genero, id_grupo, imagem, foto, cod_grupo, ativo, usuario, data_criacao, durabilidade, cod_grupo_pessoas, cod_categoria
+FROM ROMANEIO.dbo.tb_item_romaneio
+WHERE Ativo = 1
+AND id_item IN (
+	SELECT
+		id_item
+	FROM ROMANEIO.dbo.tb_rexromaneio rexRom WITH(NOLOCK)
+	WHERE rexRom.re = 109193
+)

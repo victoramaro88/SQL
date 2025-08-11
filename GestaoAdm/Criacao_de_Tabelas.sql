@@ -13,12 +13,12 @@ GO
 
 CREATE TABLE SchNume.TipDadoAdic (
     tipdadCodi INT PRIMARY KEY,
-    dadDescr VARCHAR(50) NOT NULL,
+    tipdadDescr VARCHAR(50) NOT NULL,
     tipdadAtv bit NOT NULL
 );
 GO
 
-INSERT INTO SchNume.TipDadoAdic (tipdadCodi, dadDescr, tipdadAtv)
+INSERT INTO SchNume.TipDadoAdic (tipdadCodi, tipdadDescr, tipdadAtv)
 VALUES 
 (1, 'Texto', 1),
 (2, 'Número', 1)
@@ -27,17 +27,17 @@ GO
 
 -------------------------------------------------------------------------------------
 
-CREATE TABLE SchNume.ModNume (
-    modNumCodi INT PRIMARY KEY,
-    modNumDesc VARCHAR(50) NOT NULL,
-    modNumAtv BIT NOT NULL
+CREATE TABLE SchNume.NatNume (
+    natNumCodi INT PRIMARY KEY,
+    natNumDesc VARCHAR(50) NOT NULL,
+    natNumAtv BIT NOT NULL
 );
 GO
 
-INSERT INTO SchNume.ModNume (modNumCodi, modNumDesc, modNumAtv)
+INSERT INTO SchNume.NatNume (natNumCodi, natNumDesc, natNumAtv)
 VALUES 
 (1, 'Ostensivo', 1),
-(2, 'Reservado', 1)
+(2, 'Sigiloso', 1)
 ;
 GO
 
@@ -50,7 +50,7 @@ CREATE TABLE SchNume.TipoNume (
     tipNumDest  VARCHAR(250) NULL,
     tipNumAtv BIT NOT NULL,
     uorOpmCod SMALLINT NOT NULL,
-    CONSTRAINT fk_TipoNume_uorOpmCod FOREIGN KEY (uorOpmCod) REFERENCES SchNume.TipoNume(uorOpmCod)
+    --CONSTRAINT fk_TipoNume_uorOpmCod FOREIGN KEY (uorOpmCod) REFERENCES DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ_TBL(uorOpmCod)
 );
 GO
 
@@ -89,17 +89,17 @@ GO
 CREATE TABLE SchNume.Numerador (
     numCodi BIGINT PRIMARY KEY,
     numDthr DATETIME NOT NULL,
-    numAssu VARCHAR(200) NOT NULL,
-    numReme VARCHAR(100) NOT NULL,
-    numDest VARCHAR(100) NOT NULL,
+    numAssu VARCHAR(250) NOT NULL,
+    numReme VARCHAR(250) NOT NULL,
+    numDest VARCHAR(250) NOT NULL,
     numNumSEI VARCHAR(100) NULL,
     numAtv BIT NOT NULL,
     pesIdf BIGINT NOT NULL,
     tipNumCodi INT NOT NULL,
-    modNumCodi INT NOT NULL,
-    CONSTRAINT fk_Numerador_pesIdf FOREIGN KEY (pesIdf) REFERENCES DB_CORP_CCB.SchCRPCCB.PES(pesIdf),
+    natNumCodi INT NOT NULL,
+    --CONSTRAINT fk_Numerador_pesIdf FOREIGN KEY (pesIdf) REFERENCES DB_CORP_CCB.SchCRPCCB.PES(pesIdf),
     CONSTRAINT fk_Numerador_tipNumCodi FOREIGN KEY (tipNumCodi) REFERENCES SchNume.TipoNume(tipNumCodi),
-    CONSTRAINT fk_Numerador_modNumCodi FOREIGN KEY (modNumCodi) REFERENCES SchNume.ModNume(modNumCodi)
+    CONSTRAINT fk_Numerador_natNumCodi FOREIGN KEY (natNumCodi) REFERENCES SchNume.NatNume(natNumCodi)
 );
 GO
 
@@ -116,40 +116,33 @@ GO
 
 -------------------------------------------------------------------------------------
 
-CREATE TABLE SchNume.Anexo ( --FALTA FAZER O ANEXO
-    refCodi BIGINT PRIMARY KEY,
-    refDesc VARCHAR(250) NOT NULL,
-    refAtv BIT NOT NULL,
+CREATE TABLE SchNume.Anexo ( 
+    aneCodi BIGINT PRIMARY KEY,
+    aneDesc VARCHAR(250) NOT NULL,
+    aneAtv BIT NOT NULL,
     numCodi BIGINT NOT NULL,
-    CONSTRAINT fk_Referencia_numCodi FOREIGN KEY (numCodi) REFERENCES SchNume.Numerador(numCodi)
+    CONSTRAINT fk_Anexo_numCodi FOREIGN KEY (numCodi) REFERENCES SchNume.Numerador(numCodi)
 );
 GO
 
 -------------------------------------------------------------------------------------
 
+CREATE TABLE SchNume.Interessado ( 
+    intCodi BIGINT PRIMARY KEY,
+    intNome VARCHAR(250) NULL,
+    intAtv BIT NOT NULL,
+    numCodi BIGINT NOT NULL,
+    pesIdf BIGINT NULL,
+    CONSTRAINT fk_Interessado_numCodi FOREIGN KEY (numCodi) REFERENCES SchNume.Numerador(numCodi),
+    --CONSTRAINT fk_Interessado_pesIdf FOREIGN KEY (pesIdf) REFERENCES DB_CORP_CCB.SchCRPCCB.PES(pesIdf)
+);
+GO
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-------------------------------------------------------------------------------------
 
 CREATE TABLE SchNume.VlrDadosAdic (
     vlrDadCodi BIGINT PRIMARY KEY,
-    vlrDadTxt VARCHAR(250) NULL,
+    vlrDadTxt VARCHAR(500) NULL,
     vlrDadNum DECIMAL(10, 2) NULL,
     vlrDadAtv BIT NOT NULL,
     dadCodi BIGINT NOT NULL,
@@ -166,55 +159,3 @@ GO
 DROP TABLE SchNume.TipDadoAdic;
 DROP TABLE SchNume.ModNume;
 */
-
-
-/*
- TipDadoAdic - OK
- ModNume - OK
- TipoNume - OK
- DadosAdic - OK
- Numerador - OK
- VlrDadosAdic - OK
- Referencia - OK
- Anexo
- Interessado
- */
-
-
-
-
-SELECT PesIdf, PesNom, PesSclNom, PesTipCod, PesNasDat, PesCpfMigNum, PesIclDat
-FROM DB_CORP_CCB.SchCRPCCB.PES
-WHERE PesCpfMigNum = '32263773886'
-;
-
-
-
-
-
-
-
-DB_MUNICIPIO_OPM.SchUOR.UOR
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
