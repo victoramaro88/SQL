@@ -18,7 +18,7 @@ CREATE TABLE SchNume.TipDadoAdic (
 );
 GO
 
-INSERT INTO SchNume.TipDadoAdic (tipdadCodi, tipdadDescr, tipdadAtv)
+INSERT INTO DB_GESTAO_ADM.SchNume.TipDadoAdic (tipdadCodi, tipdadDescr, tipdadAtv)
 VALUES 
 (1, 'Texto', 1),
 (2, 'Número', 1)
@@ -34,7 +34,7 @@ CREATE TABLE SchNume.NatNume (
 );
 GO
 
-INSERT INTO SchNume.NatNume (natNumCodi, natNumDesc, natNumAtv)
+INSERT INTO DB_GESTAO_ADM.SchNume.NatNume (natNumCodi, natNumDesc, natNumAtv)
 VALUES 
 (1, 'Ostensivo', 1),
 (2, 'Sigiloso', 1)
@@ -50,11 +50,10 @@ CREATE TABLE SchNume.TipoNume (
     tipNumDest  VARCHAR(250) NULL,
     tipNumAtv BIT NOT NULL,
     uorOpmCod SMALLINT NOT NULL,
-    --CONSTRAINT fk_TipoNume_uorOpmCod FOREIGN KEY (uorOpmCod) REFERENCES DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ_TBL(uorOpmCod)
 );
 GO
 
-INSERT INTO SchNume.TipoNume (tipNumCodi, tipNumDesc, tipNumAss, tipNumDest, tipNumAtv, uorOpmCod)
+INSERT INTO DB_GESTAO_ADM.SchNume.TipoNume (tipNumCodi, tipNumDesc, tipNumAss, tipNumDest, tipNumAtv, uorOpmCod)
 VALUES 
 (1, 'PARTE', NULL, NULL, 1, 1),
 (2, 'OFÍCIO', NULL, NULL, 1, 1),
@@ -71,12 +70,12 @@ CREATE TABLE SchNume.DadosAdic (
     dadAtv BIT NOT NULL,
     tipNumCodi INT NOT NULL,
     tipdadCodi INT NOT NULL,
-    CONSTRAINT fk_DadosAdic_tipNumCodi FOREIGN KEY (tipNumCodi) REFERENCES SchNume.TipoNume(tipNumCodi),
-    CONSTRAINT fk_DadosAdic_tipdadCodi FOREIGN KEY (tipdadCodi) REFERENCES SchNume.TipDadoAdic(tipdadCodi)
+    CONSTRAINT fk_DadosAdic_tipNumCodi FOREIGN KEY (tipNumCodi) REFERENCES DB_GESTAO_ADM.SchNume.TipoNume(tipNumCodi),
+    CONSTRAINT fk_DadosAdic_tipdadCodi FOREIGN KEY (tipdadCodi) REFERENCES DB_GESTAO_ADM.SchNume.TipDadoAdic(tipdadCodi)
 );
 GO
 
-INSERT INTO SchNume.DadosAdic (dadCodi, dadDescr, dadAtv, tipNumCodi, tipdadCodi)
+INSERT INTO DB_GESTAO_ADM.SchNume.DadosAdic (dadCodi, dadDescr, dadAtv, tipNumCodi, tipdadCodi)
 VALUES 
 (1, 'Valor Conta de Energia (R$)', 1, 3, 2),
 (2, 'Valor Conta de Água (R$)', 1, 3, 2),
@@ -88,6 +87,7 @@ GO
 
 CREATE TABLE SchNume.Numerador (
     numCodi BIGINT PRIMARY KEY,
+	numIncr BIGINT NOT NULL,
     numDthr DATETIME NOT NULL,
     numAssu VARCHAR(250) NOT NULL,
     numReme VARCHAR(250) NOT NULL,
@@ -97,9 +97,9 @@ CREATE TABLE SchNume.Numerador (
     pesIdf BIGINT NOT NULL,
     tipNumCodi INT NOT NULL,
     natNumCodi INT NOT NULL,
-    --CONSTRAINT fk_Numerador_pesIdf FOREIGN KEY (pesIdf) REFERENCES DB_CORP_CCB.SchCRPCCB.PES(pesIdf),
-    CONSTRAINT fk_Numerador_tipNumCodi FOREIGN KEY (tipNumCodi) REFERENCES SchNume.TipoNume(tipNumCodi),
-    CONSTRAINT fk_Numerador_natNumCodi FOREIGN KEY (natNumCodi) REFERENCES SchNume.NatNume(natNumCodi)
+    uorCod SMALLINT NOT NULL,
+    CONSTRAINT fk_Numerador_tipNumCodi FOREIGN KEY (tipNumCodi) REFERENCES DB_GESTAO_ADM.SchNume.TipoNume(tipNumCodi),
+    CONSTRAINT fk_Numerador_natNumCodi FOREIGN KEY (natNumCodi) REFERENCES DB_GESTAO_ADM.SchNume.NatNume(natNumCodi)
 );
 GO
 
@@ -110,7 +110,7 @@ CREATE TABLE SchNume.Referencia (
     refDesc VARCHAR(250) NOT NULL,
     refAtv BIT NOT NULL,
     numCodi BIGINT NOT NULL,
-    CONSTRAINT fk_Referencia_numCodi FOREIGN KEY (numCodi) REFERENCES SchNume.Numerador(numCodi)
+    CONSTRAINT fk_Referencia_numCodi FOREIGN KEY (numCodi) REFERENCES DB_GESTAO_ADM.SchNume.Numerador(numCodi)
 );
 GO
 
@@ -121,7 +121,7 @@ CREATE TABLE SchNume.Anexo (
     aneDesc VARCHAR(250) NOT NULL,
     aneAtv BIT NOT NULL,
     numCodi BIGINT NOT NULL,
-    CONSTRAINT fk_Anexo_numCodi FOREIGN KEY (numCodi) REFERENCES SchNume.Numerador(numCodi)
+    CONSTRAINT fk_Anexo_numCodi FOREIGN KEY (numCodi) REFERENCES DB_GESTAO_ADM.SchNume.Numerador(numCodi)
 );
 GO
 
@@ -133,8 +133,7 @@ CREATE TABLE SchNume.Interessado (
     intAtv BIT NOT NULL,
     numCodi BIGINT NOT NULL,
     pesIdf BIGINT NULL,
-    CONSTRAINT fk_Interessado_numCodi FOREIGN KEY (numCodi) REFERENCES SchNume.Numerador(numCodi),
-    --CONSTRAINT fk_Interessado_pesIdf FOREIGN KEY (pesIdf) REFERENCES DB_CORP_CCB.SchCRPCCB.PES(pesIdf)
+    CONSTRAINT fk_Interessado_numCodi FOREIGN KEY (numCodi) REFERENCES DB_GESTAO_ADM.SchNume.Numerador(numCodi)
 );
 GO
 
@@ -147,8 +146,8 @@ CREATE TABLE SchNume.VlrDadosAdic (
     vlrDadAtv BIT NOT NULL,
     dadCodi BIGINT NOT NULL,
     numCodi BIGINT NOT NULL,
-    CONSTRAINT fk_VlrDadosAdic_dadCodi FOREIGN KEY (dadCodi) REFERENCES SchNume.DadosAdic(dadCodi),
-    CONSTRAINT fk_VlrDadosAdic_numCodi FOREIGN KEY (numCodi) REFERENCES SchNume.Numerador(numCodi)
+    CONSTRAINT fk_VlrDadosAdic_dadCodi FOREIGN KEY (dadCodi) REFERENCES DB_GESTAO_ADM.SchNume.DadosAdic(dadCodi),
+    CONSTRAINT fk_VlrDadosAdic_numCodi FOREIGN KEY (numCodi) REFERENCES DB_GESTAO_ADM.SchNume.Numerador(numCodi)
 );
 GO
 
