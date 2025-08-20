@@ -97,13 +97,6 @@ WHERE uorCod = 607 AND Num.numAtv = 1 --AND Num.tipNumCodi = 3;
 
 
 
---> CRIAR SERVIÇO PARA RETORNAR NOME DA UOR E OPM DE SUA UOR
-SELECT 
-	UorOpmCod, UorOpmNome, Uor, UorNome
-FROM DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ
-WHERE Uor = 607 AND UorOpmAtvIdc = 1
-;
-
 
  --CONSULTA DE OCORRÊNCIAS DO SDO (PRECISA SER PRODUÇÃO)
   DECLARE @GB VARCHAR(10) = '13.GB'
@@ -117,6 +110,34 @@ WHERE Uor = 607 AND UorOpmAtvIdc = 1
   ORDER BY OCRDAT DESC
   
   
+
+
+
+SELECT ISNULL(MAX(numIncr), 0) + 1 AS novoId
+FROM DB_GESTAO_ADM.SchNume.Numerador WITH(NOLOCK)
+WHERE tipNumCodi = 3 AND numAtv = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

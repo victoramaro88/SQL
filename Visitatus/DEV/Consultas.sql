@@ -153,18 +153,11 @@ WHERE pu.usuCodi = 50
 
 SELECT 
 	*
-FROM DB_Visitatus_DEV.dbo.Sessao Ses
-JOIN DB_Visitatus_DEV.dbo.Loja Loj ON Ses.lojCodi = Loj.lojCodi
-JOIN DB_Visitatus_DEV.dbo.TipoSessao TipSes ON Ses.tiSCodi = TipSes.tiSCodi 
-JOIN DB_Visitatus_DEV.dbo.
+FROM DB_Visitatus_DEV.dbo.Sessao Ses WITH(NOLOCK)
+JOIN DB_Visitatus_DEV.dbo.Loja Loj WITH(NOLOCK) ON Ses.lojCodi = Loj.lojCodi
+JOIN DB_Visitatus_DEV.dbo.TipoSessao TipSes WITH(NOLOCK) ON Ses.tiSCodi = TipSes.tiSCodi 
+--JOIN DB_Visitatus_DEV.dbo.
 ;
-
-
-
-
-
-
-
 
 
 

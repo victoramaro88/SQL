@@ -47,3 +47,8 @@ where UorCod = 600
 SELECT * FROM DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ_TBL
 where Uor = 600 and UorOpmAtvIdc = 1
 ;
+
+
+
+SELECT OrgCod, OrgNom, OrgSgl, OrgAtvIdc
+FROM DB_MUNICIPIO_OPM.SchUOR.ORG;
