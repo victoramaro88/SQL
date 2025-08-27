@@ -30,3 +30,13 @@ FROM DB_Visitatus.dbo.TemplateCertificadoPresenca;
 UPDATE DB_Visitatus.dbo.TemplateCertificadoPresenca
 SET tmpCrtPreMode=''
 WHERE tmpCrtPreCodi=0;
+
+
+SELECT 
+	*
+/*	Ses.sesCodi, ses.sesNome, ses.sesDesc, ses.sesDtHr, ses.sesNume,
+	Loj.lojCodi, Loj.lojNome, Loj.lojNumL, Loj.lojLogo, loj.*/
+FROM DB_Visitatus.dbo.Sessao Ses WITH(NOLOCK)
+JOIN DB_Visitatus.dbo.Loja Loj WITH(NOLOCK) ON Ses.lojCodi = Loj.lojCodi
+JOIN DB_Visitatus.dbo.TipoSessao TipSes WITH(NOLOCK) ON Ses.tiSCodi = TipSes.tiSCodi
+;

@@ -120,12 +120,23 @@ WHERE tipNumCodi = 3 AND numAtv = 1;
 
 
 
+-------------------------------------------------------------------------------------------
+--> *** PARTE DE REGISTRO DE LOG's: (AINDA PRECISA SER IMPLEMENTADO)
+
+SELECT LogCod, IP, Host, ModLogCod, UsrCod, SisLogReg, datHorReg
+FROM DB_LOG.SchLog.Log;
+
+SELECT ModLogCod, SisLogCod, ModLog
+FROM DB_LOG.SchLog.ModLog;
+
+SELECT SisLogCod, SisLog
+FROM DB_LOG.SchLog.SisLog;
 
 
 
 
 
-
+                                                
 
 
 
