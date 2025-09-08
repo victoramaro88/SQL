@@ -134,23 +134,28 @@ FROM DB_LOG.SchLog.SisLog;
 
 
 
-
-
                                                 
+SELECT 
+	*
+FROM DB_GESTAO_ADM.SchNume.Numerador WITH(NOLOCK)
+
+
+SELECT tipNumCodi, tipNumDesc, tipNumAss, tipNumDest, tipNumAtv, uorOpmCod
+FROM DB_GESTAO_ADM.SchNume.TipoNume;
+
+
+SELECT
+	TIPO.tipNumCodi, TIPO.tipNumDesc, TIPO.tipNumAss, TIPO.tipNumDest, TIPO.tipNumAtv, TIPO.uorOpmCod, COUNT(DADOS.dadDescr) AS qtdDadAdic
+FROM DB_GESTAO_ADM.SchNume.TipoNume TIPO WITH(NOLOCK)
+LEFT JOIN DB_GESTAO_ADM.SchNume.DadosAdic DADOS WITH(NOLOCK) ON TIPO.tipNumCodi = DADOS.tipNumCodi 
+WHERE TIPO.uorOpmCod = 600
+GROUP BY TIPO.tipNumCodi, TIPO.tipNumDesc, TIPO.tipNumAss, TIPO.tipNumDest, TIPO.tipNumAtv, TIPO.uorOpmCod
+ORDER BY TIPO.tipNumDesc;
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+SELECT dadCodi, dadDescr, dadAtv, tipNumCodi, tipdadCodi
+FROM DB_GESTAO_ADM.SchNume.DadosAdic;
 
 
