@@ -159,3 +159,17 @@ SELECT dadCodi, dadDescr, dadAtv, tipNumCodi, tipdadCodi
 FROM DB_GESTAO_ADM.SchNume.DadosAdic;
 
 
+
+
+
+
+SELECT tipNumCodi, tipNumDesc, tipNumAss, tipNumDest, tipNumAtv, uorOpmCod
+FROM DB_GESTAO_ADM.SchNume.TipoNume;
+
+
+
+
+SELECT vlrDadCodi, vlrDadTxt, vlrDadNum, vlrDadAtv, dadCodi, numCodi
+FROM DB_GESTAO_ADM.SchNume.VlrDadosAdic;
+
+         
