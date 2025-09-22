@@ -1,26 +1,26 @@
 -- Tabela para consultar de Militar Ativo, Agregado e Inativo
 SELECT * FROM DB_EFETIVO.SchEfetivo.Efetivo
---WHERE RE = 112087
-WHERE CPF = '15739843707'
+WHERE RE = 112087
+--WHERE CPF = '15739843707'
 --WHERE NOME LIKE '%NAVARRO%'
 
 -- Tabela para consultar Militar em qualquer situação e Funcionário Civil cadastrado na Base de Dados da PM 
 SELECT * FROM DB_EFETIVO.SchEfetivo.RHCB
-WHERE CPF = '08846812891'
+WHERE CPF = '26759890884'
 
 SELECT 
 	* 
 FROM DB_CORP_CCB.SchCRPCCB.PES P --WITH(NOLOCK)
 JOIN DB_CORP_CCB.SchCRPCCB.DOCPF DOC ON DOC.PesIdf = P.PesIdf 
 WHERE
-	--P.PesIdf = 79201
+	P.PesIdf = 6233
 	--DOC.DocPfNum = '92644856000' -- TESTE CADASTRO GOV BR
 	--DOC.DocPfNum = '26922090870' --GIUSEPPE (OK)
 	--DOC.DocPfNum = '33618090889' --BRUNO (OK)
 	--DOC.DocPfNum = '47031718805' --DEIVID (OK)
 	--DOC.DocPfNum = '21762773848' --RODRIGO (OK)
-	DOC.DocPfNum = '29963124810' 
-	AND DOC.DocTipPfCod = 1
+	--DOC.DocPfNum = '26759890884' 
+	--AND DOC.DocTipPfCod = 1
 
 SELECT AtvPrfCod, PesIdf, PesAtvPrfIclDat
 FROM DB_CORP_CCB.SchCRPCCB.PESATVPRF

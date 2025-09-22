@@ -1,7 +1,8 @@
 
 SELECT UorCod, OrgCod, OrgNivCod, UorNom, UorAreGeo, UorAtvIdc, UorSglNom, UorRegOprDat, PesIdf, PosCod, UorPesRegOprCod, RegOprTipCod, UorOpmIdc, UorAreCor, UorIpRegOprNum, UorMaqRegOprNom
 FROM DB_MUNICIPIO_OPM.SchUOR.UOR
-WHERE UorNom LIKE '%Décimo Terceiro%'
+--WHERE UorNom LIKE '%Décimo Terceiro%' OR UorNom LIKE '%Jales%'
+WHERE UorCod = 602
 ;
 
 SELECT OrgNivCod, OrgNivDes, OrgNivAtvIdc
@@ -15,20 +16,33 @@ SELECT
 	--*
 	Uor, UorOpmCod, UorNome, UorOpm
 FROM DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ
-WHERE UorOpmIdc = 1 AND UorOpmAtvIdc = 1
+WHERE UorOpmAtvIdc = 1
+	AND UOR = 602
+		--AND UorOpmIdc = 1
 ;
 
 
 --> RETORNANDO TODAS A UNIDADES DA OPM
 SELECT 
 	--*
-	Uor, UorNome, UorOpm, OrgNiv
+	Uor, UorOpmNome, UorNome, UorOpm, OrgNiv
 FROM DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ
---WHERE UorGBNome = '13.GB' AND UorOpmAtvIdc = 1
-WHERE UorOpmCod = 600 AND UorOpmAtvIdc = 1
-	--AND OrgNiv NOT IN (14)
+WHERE UorOpmCod IN (600) AND UorOpmAtvIdc = 1
+	AND OrgNiv IN (15)
+ORDER BY UorOpmCod, UorNome
 ;
 
+
+SELECT 
+	--*
+	Uor, UorOpmNome, UorNome, UorOpm, OrgNiv
+FROM DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ WITH(NOLOCK)
+WHERE (UorOpmAtvIdc = 1 AND OrgNiv IN (15)) --OrgNiv == 15: Estação de Bombeiros (EB)
+		AND 
+		(UorOpmNome = '13.GB' OR UorOpmNome = '02.GB')
+ORDER BY UorOpmNome, UorNome;
+
+                                            
 
 
 
@@ -52,3 +66,6 @@ where Uor = 600 and UorOpmAtvIdc = 1
 
 SELECT OrgCod, OrgNom, OrgSgl, OrgAtvIdc
 FROM DB_MUNICIPIO_OPM.SchUOR.ORG;
+
+
+

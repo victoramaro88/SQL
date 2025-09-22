@@ -1,6 +1,6 @@
 SELECT SftCod, SftTipCod, SftClsCod, OpmCbIdf, SftNom, SftDes, SftAtvIdc, SftSgl, SftCpfIclNum, SftIclDat, CnmAreCod
 FROM DB_CONAPLIC.SchCTRAPL.SFT
-WHERE SftNom LIKE '%ma%'
+WHERE SftNom LIKE '%Administ%'
 --WHERE SftCod = 118
 ;
 
