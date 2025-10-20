@@ -40,3 +40,25 @@ FROM DB_Visitatus.dbo.Sessao Ses WITH(NOLOCK)
 JOIN DB_Visitatus.dbo.Loja Loj WITH(NOLOCK) ON Ses.lojCodi = Loj.lojCodi
 JOIN DB_Visitatus.dbo.TipoSessao TipSes WITH(NOLOCK) ON Ses.tiSCodi = TipSes.tiSCodi
 ;
+
+
+SELECT * FROM DB_Visitatus.dbo.Presenca WHERE sesCodi = 24;
+SELECT * FROM DB_Visitatus.dbo.Perfil;
+
+-- CONSULTA DE PRESENÇAS POR SESSÃO
+SELECT 
+	--*
+	SES.sesCodi, SES.sesNume, USR.usuCodi, USR.usuNome
+	, PRF.perNome 
+FROM DB_Visitatus.dbo.Sessao SES
+JOIN DB_Visitatus.dbo.Presenca PRE ON SES.sesCodi = PRE.sesCodi 
+JOIN DB_Visitatus.dbo.Usuario USR ON PRE.usuCodi = USR.usuCodi 
+LEFT JOIN DB_Visitatus.dbo.PerfilUsuario PRFUSR ON USR.usuCodi = PRFUSR.usuCodi AND PRFUSR.lojCodi = SES.lojCodi 
+LEFT JOIN DB_Visitatus.dbo.Perfil PRF ON PRFUSR.perCodi = PRF.perCodi 
+WHERE SES.sesCodi = 24 
+	AND PRF.perCodi NOT IN (1, 2)
+ORDER BY USR.usuNome
+;
+
+
+
