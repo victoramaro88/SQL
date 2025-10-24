@@ -26,3 +26,16 @@ FROM DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ
 WHERE UorOpmNome = '13.GB'
 ;
 
+
+
+
+--Consulta geral de unidades
+SELECT 
+	UOR.UorOpmNome, UOR.UorSGBNome, UOR.UorNome, Estoque.EstCadDat
+FROM DB_MATERIAL_RESGATE.dbo.Estoque Estoque WITH(NOLOCK)
+JOIN DB_MATERIAL_RESGATE.dbo.Material Mat WITH(NOLOCK) ON Mat.IdMat = Estoque.IdMat
+JOIN DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ UOR WITH(NOLOCK) ON UOR.Uor = Estoque.UorCod
+WHERE UOR.UorOpmAtvIdc = 1
+GROUP BY UOR.UorOpmNome, UOR.UorSGBNome, UOR.UorNome, Estoque.EstCadDat
+ORDER BY UOR.UorSGBNome, UOR.UorNome, Estoque.EstCadDat
+;
