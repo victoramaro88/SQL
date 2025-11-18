@@ -1,0 +1,149 @@
+-- SchNOC.VW_OCR source
+
+--CREATE OR ALTER VIEW [SchNOC].[VW_OCR] AS 
+SELECT DISTINCT
+	CAST(OCR.OcrDat AS DATE) DATA_OCR, 
+	OCR.OcrGreDat DATA_GERACAO,
+	OCR.OcrNum TALAO, 
+	ALE.CadCod CAD,
+--=================================================================================================================
+-- Alteração da views em 17/12/2024 Pelo Cabo Viana
+-- Motivo: Cad unico e novas Cabines
+--=================================================================================================================
+	--CASE 
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 101 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 01.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 102 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 02.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 103 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 03.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 104 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 04.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 105 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 05.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 108 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 08.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 117 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 17.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 118 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 18.GB'
+	--	WHEN ALE.CadCod = 1 AND ALE.AleCabNum = 119 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - GAED'
+	--	WHEN (ALE.CadCod = 10 AND ALE.AleCabNum = 17)
+	--		OR (ALE.CadCod = 10 AND ALE.AleCabNum = 117) THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 07.GB'
+	--	WHEN (ALE.CadCod = 4 AND ALE.AleCabNum = 15)
+	--		OR (ALE.CadCod = 24 AND ALE.AleCabNum = 15) THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 15.GB'
+	--	WHEN ALE.CadCod = 26 AND ALE.AleCabNum = 16 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 16.GB'
+	--	WHEN ALE.CadCod = 10 AND ALE.AleCabNum = 19 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 19.GB'
+	--	WHEN ALE.CadCod = 12 AND ALE.AleCabNum = 11 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 09.GB'
+	--	WHEN ALE.CadCod = 6 AND ALE.AleCabNum = 10 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 10.GB'
+	--	WHEN ALE.CadCod = 9 AND ALE.AleCabNum = 3 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 13.GB'
+	--	WHEN ALE.CadCod = 18 AND ALE.AleCabNum = 4 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 14.GB'
+	--	WHEN (ALE.CadCod = 13 AND ALE.AleCabNum = 3) OR (ALE.CadCod = 13 AND ALE.AleCabNum = 20) THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 20.GB'
+	--	WHEN ALE.CadCod = 8 AND ALE.AleCabNum = 9 THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 06.GB'
+	--	WHEN (ALE.CadCod = 5 AND ALE.AleCabNum = 8) 
+	--		OR (ALE.CadCod = 5 AND ALE.AleCabNum = 9) 
+	--		OR (ALE.CadCod = 5 AND ALE.AleCabNum = 18) 
+	--		OR (ALE.CadCod = 5 AND ALE.AleCabNum = 19) THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - 11.GB'
+	--	WHEN (ALE.CadCod = 8 AND ALE.AleCabNum = 20) 
+	--		OR (ALE.CadCod = 5 AND ALE.AleCabNum = 33)  THEN CAST(ALE.AleCabNum AS VARCHAR) + ' - GBMAR'
+	--	ELSE NULL END CABINE,
+--=================================================================================================================
+	CASE
+		WHEN ALE.AleCabNum = 119 THEN CAST(ALE.AleCabNum AS VARCHAR) +  ' - ' + CAB.CabDes
+		WHEN ALE.AleCabNum = 120 THEN CAST(ALE.AleCabNum AS VARCHAR) +  ' - ' + CAB.CabDes
+		WHEN ALE.AleCabNum = 121 THEN CAST(ALE.AleCabNum AS VARCHAR) +  ' - ' + CAB.CabDes
+		ELSE
+		CAST(ALE.AleCabNum AS VARCHAR) + ' - ' + RIGHT('00' + SUBSTRING(CAB.CabDes, 1 , CHARINDEX('º',CAB.CabDes)-1),2) + '.GB' --######################## AQUI QUE FALHA A CONSULTA!!! ########################  
+		END AS CABINE,
+	--RIGHT('00' + SUBSTRING(CAB.CabDes, 1 , CHARINDEX('º',CAB.CabDes)-1),2),
+	CASE 
+		WHEN LEFT(ALE.AleOpmCod,5) = '70101'THEN '01.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70102'THEN '02.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70103'THEN '03.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70104'THEN '04.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70105'THEN '05.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70108'THEN '08.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70117'THEN '17.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70118'THEN '18.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70000'THEN 'GAED'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70307'THEN '07.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70315'THEN '15.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70316'THEN '16.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70319'THEN '19.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70409'THEN '09.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70410'THEN '10.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70413'THEN '13.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70414'THEN '14.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70420'THEN '20.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70501'THEN 'GBMar'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70506'THEN '06.GB'
+		WHEN LEFT(ALE.AleOpmCod,5) = '70511'THEN '11.GB'
+		ELSE NULL END AS GB,
+	OCR.LgrNom ENDERECO, 
+	OCR.OcrImvNum NUMERAL, 
+	OCR.OcrBaiNom BAIRRO,
+	OCR.OcrRefEnd REFERENCIA,
+	MUN.MunNom AS MUNICIPIO,
+	CONCAT('(' , OCR.TelDddNum , ') ' , OCR.OcrChmTel)TEL_SOLIC, 
+	RTRIM(LTRIM(OCR.OcrNatIni)) + ' - ' + RTRIM(NAT.NatDes) +' - ' + RTRIM(ALE.AleCplNatDes) + ' - ' + ALE.AleDtlCplNatDes NATUREZA,
+	CASE
+		WHEN ALE.AleSitCod = 'A' THEN 'ATENDIMENTO'
+		WHEN ALE.AleSitCod = 'P' THEN 'PENDENTE' 
+	END AS SITUACAO,
+	ALE.AleLon AS LONG, 
+	ALE.AleLat AS LAT,
+	CASE 
+		WHEN RTRIM(LTRIM(PTRDSL.PtrIdf))IS NOT NULL AND RTRIM(LTRIM(PTRCPN.PTRCPNVTRPFX)) IS NOT NULL THEN RTRIM(LTRIM(PTRDSL.PtrIdf)) + ' - ' + RTRIM(LTRIM(PTRCPN.PTRCPNVTRPFX))  
+		WHEN RTRIM(LTRIM(PTRDSI.PtrIdf))IS NOT NULL AND RTRIM(LTRIM(PTRCPN.PTRCPNVTRPFX)) IS NOT NULL THEN RTRIM(LTRIM(PTRDSI.PtrIdf)) + ' - ' + RTRIM(LTRIM(PTRCPN.PTRCPNVTRPFX)) 
+		ELSE RTRIM(LTRIM(PTRDSI.PtrIdf)) + ' - '
+		END US_PFX,
+--RTRIM(LTRIM(PTRDSI.PtrIdf)) TESTE,
+	UPPER (CAST ((
+		SELECT RTRIM(HISOCOR.HisOcrDes) + ';'
+                        FROM DB_CARGA_SIOPM.SchNOC.HISOCR AS HISOCOR
+                        WHERE HISOCOR.OcrNum = OCR.OcrNum
+                                AND HISOCOR.OcrDat = OCR.OcrDat AND HISOCOR.CadCod = OCR.CadCod
+                        ORDER BY   HISOCOR.HisOcrCod,HISOCOR.HisOcrNum,HISOCOR.HisOcrSeq ASC
+						FOR XML PATH('')
+						) AS VARCHAR(MAX)) )AS HISTORICO,
+	UOR.UorNome ESTACAO,
+	CASE
+		WHEN ALE.AlePriCod = 2 THEN 'URGENTE'
+		WHEN ALE.AlePriCod = 1 THEN 'NORMAL'
+	END PRIORIDADE
+FROM
+	DB_CARGA_SIOPM.SchNOC.OCR OCR
+INNER JOIN 
+	DB_CARGA_SIOPM.SchNOC.ALE ALE 
+	ON OCR.OcrDat = ALE.OcrDat AND OCR.OcrNum = ALE.OcrNum AND OCR.CadCod = ALE.CadCod
+LEFT JOIN
+	DB_MUNICIPIO_OPM.dbo.MUN MUN ON OCR.OcrMunCod = MUN.Muncod
+LEFT JOIN 
+	DB_CARGA_SIOPM.SchNOC.PTRDSL PTRDSL
+	ON OCR.OcrDat = PTRDSL.OcrDat AND OCR.OcrNum = PTRDSL.OcrNum AND OCR.CadCod = PTRDSL.CadCod 
+	AND PTRDSL.PtrDslHSF = '1753-01-01 00:00:00.000' 
+	AND PTRDSL.PtrDslHCF = '1753-01-01 00:00:00.000'
+LEFT JOIN 
+	DB_CARGA_SIOPM.SchNOC.PTRDSI PTRDSI
+	ON OCR.OcrDat = PTRDSI.OcrDat AND OCR.OcrNum = PTRDSI.OcrNum AND OCR.CadCod = PTRDSI.CadCod 
+	--AND PTRDSI.PtrDsiHSI = '1753-01-01 00:00:00.000'
+	--AND PTRDSI.PtrDslHCI = '1753-01-01 00:00:00.000'
+LEFT JOIN 
+	DB_CARGA_SIOPM.SchNOC.PTR PTR
+	ON RTRIM(LTRIM(PTRDSL.PtrIdf)) = RTRIM(LTRIM(PTR.PtrIdf))
+LEFT JOIN 
+	(SELECT RTRIM(LTRIM(PTRIDF)) AS PTRIDF, PTRCPNVTRPFX
+	FROM DB_CARGA_SIOPM.SchTMP.PTRCPN
+	WHERE PTRCPNTIPIDF = 'VTR'
+	GROUP BY PTRIDF,PTRCPNVTRPFX
+	) PTRCPN
+	ON RTRIM(LTRIM(PTR.PtrIdf)) = RTRIM(LTRIM(PTRCPN.PtrIdf))
+LEFT JOIN
+	DB_CARGA_SIOPM.dbo.NAT NAT
+	ON OCR.OcrNatIni = NAT.NATCOD
+LEFT JOIN
+	DB_CARGA_SIOPM.dbo.CAB CAB 
+	ON ALE.CadCod = CAB.CadCod AND ALE.AleCabNum = CAB.CabNum
+LEFT JOIN
+	DB_MUNICIPIO_OPM.SchUOR.VW_UOR_OPM_UOROPM_UORHRQ UOR
+	ON ALE.AleOpmCod = UOR.UorOpm AND UOR.UorOpmAtvIdc = 1
+--WHERE
+--LEFT(ALE.AleOpmCod,5) = '70105'
+--OCR.OcrNum = 4345
+--	(CAST(OCR.OcrDat AS DATE) = GETDATE()-1
+--	AND PTRDSL.PtrDslHSF = '1753-01-01 00:00:00.000' 
+--	AND PTRDSL.PtrDslHCF = '1753-01-01 00:00:00.000')
+
+--DB_SDO OCORRENCIA - VIATURAOCORRENCIA;

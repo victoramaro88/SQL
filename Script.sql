@@ -1,1 +1,0 @@
-SELECT * FROM [DB_RHCB].[SchRH].[EfeCbOpm] WHERE PesIdf = 7322;
