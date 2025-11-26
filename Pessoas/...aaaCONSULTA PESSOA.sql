@@ -1,6 +1,6 @@
 -- Tabela para consultar de Militar Ativo, Agregado e Inativo
 SELECT * FROM DB_EFETIVO.SchEfetivo.Efetivo
-WHERE RE = 112087
+WHERE RE = 156759
 --WHERE CPF = '15739843707'
 --WHERE NOME LIKE '%NAVARRO%'
 
