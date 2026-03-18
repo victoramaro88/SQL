@@ -22,4 +22,6 @@ where sesCodi = 2
 ;
 
 
-             
+
+
+SELECT * FROM DB_Visitatus_DEV.dbo.Loja;

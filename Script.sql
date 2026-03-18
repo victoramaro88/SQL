@@ -1,0 +1,5 @@
+CREATE TABLE GrupoViatura (
+    gruVtrCodi SMALLINT NOT NULL PRIMARY KEY,
+    gruVtrDesc VARCHAR(100) NOT NULL,
+    gruVtrIdc BIT NOT NULL
+);
