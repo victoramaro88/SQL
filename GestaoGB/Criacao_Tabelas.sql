@@ -146,6 +146,32 @@ VALUES
 (13, 'SOLDADO PM 2ª CLASSE', 'SD PM - 2C', 13, 1)
 ;
 
+CREATE TABLE TipoRecurso (
+    tipRecCodi SMALLINT NOT NULL PRIMARY KEY,
+    tipRecDesc VARCHAR(50) NOT NULL,
+    tipRecIdc BIT NOT NULL
+);
+
+INSERT INTO TipoRecurso (tipRecCodi, tipRecDesc, tipRecIdc)
+VALUES
+(1, 'AÇÃO', 1),
+(2, 'MENU', 1),
+(3, 'TELA', 1)
+;
+
+CREATE TABLE PerfilAcesso (
+    prfAcsCodi SMALLINT NOT NULL PRIMARY KEY,
+    prfAcsDesc VARCHAR(50) NOT NULL,
+    prfAcsIdc BIT NOT NULL
+);
+
+INSERT INTO PerfilAcesso (prfAcsCodi, prfAcsDesc, prfAcsIdc)
+VALUES
+(1, 'ADMINISTRADOR', 1),
+(2, 'GESTÃO', 1),
+(3, 'CMT PRONTIDÃO', 1),
+(4, 'CONFERENTE', 1)
+;
 
 --> CRIAÇÃO DE TABELAS RELACIONADAS
 
@@ -281,11 +307,119 @@ CREATE TABLE MaterialGaveta (
     matGvtData DATETIME NOT NULL,
     matGvtIdc BIT NOT NULL
     
-    CONSTRAINT FK_PrefixoViatura_Viatura
+    CONSTRAINT FK_MaterialGaveta_GavetaViatura
+        FOREIGN KEY (gvtVtrCodi)
+        REFERENCES GavetaViatura(gvtVtrCodi),
+    
+    CONSTRAINT FK_MaterialGaveta_Material
+        FOREIGN KEY (matCodi)
+        REFERENCES Material(matCodi)
+);
+
+CREATE TABLE BaixaViatura (
+    baiVtrCodi BIGINT NOT NULL PRIMARY KEY,
+    viaCodi BIGINT NOT NULL, --FK
+    usuCodi BIGINT NOT NULL, --FK
+    sttVtrCodi SMALLINT NOT NULL, --FK
+    baiVtrtDtIn DATETIME NOT NULL,
+    baiVtrtDtFi DATETIME NULL,
+    baiVtrtObse VARCHAR(1000) NULL,
+    baiVtrIdc BIT NOT NULL
+    
+    CONSTRAINT FK_BaixaViatura_Viatura
         FOREIGN KEY (viaCodi)
         REFERENCES Viatura(viaCodi),
     
-    CONSTRAINT FK_PrefixoViatura_Usuario
+    CONSTRAINT FK_BaixaViatura_Usuario
+        FOREIGN KEY (usuCodi)
+        REFERENCES Usuario(usuCodi),
+    
+    CONSTRAINT FK_BaixaViatura_StatusViatura
+        FOREIGN KEY (sttVtrCodi)
+        REFERENCES StatusViatura(sttVtrCodi)
+);
+
+CREATE TABLE ConferenciaMaterial (
+    confMatCodi BIGINT NOT NULL PRIMARY KEY,
+    matCodi BIGINT NOT NULL, --FK
+    usuCodi BIGINT NOT NULL, --FK
+    confMatData DATETIME NOT NULL,
+    confMatChk BIT NOT NULL,
+    confMatObse VARCHAR(500) NULL,
+    confMatIdc BIT NOT NULL
+    
+    CONSTRAINT FK_ConferenciaMaterial_Material
+        FOREIGN KEY (matCodi)
+        REFERENCES Material(matCodi),
+    
+    CONSTRAINT FK_ConferenciaMaterial_Usuario
         FOREIGN KEY (usuCodi)
         REFERENCES Usuario(usuCodi)
+);
+
+CREATE TABLE BaixaMaterial (
+    baiMatCodi BIGINT NOT NULL PRIMARY KEY,
+    matCodi BIGINT NOT NULL, --FK
+    usuCodi BIGINT NOT NULL, --FK
+    sttMatCodi SMALLINT NOT NULL, --FK
+    baiMatDtIn DATETIME NOT NULL,
+    baiMatDtFi DATETIME NULL,
+    baiMatObse VARCHAR(1000) NULL,
+    baiMatIdc BIT NOT NULL
+    
+    CONSTRAINT FK_BaixaMaterial_Material
+        FOREIGN KEY (matCodi)
+        REFERENCES Material(matCodi),
+    
+    CONSTRAINT FK_BaixaMaterial_Usuario
+        FOREIGN KEY (usuCodi)
+        REFERENCES Usuario(usuCodi),
+    
+    CONSTRAINT FK_BaixaMaterial_StatusMaterial
+        FOREIGN KEY (sttMatCodi)
+        REFERENCES StatusMaterial(sttMatCodi)
+);
+
+CREATE TABLE RecursoAcesso (
+    recAcsCodi INT NOT NULL PRIMARY KEY,
+    tipRecCodi SMALLINT NOT NULL,
+    recAcsDesc VARCHAR(100) NULL,
+    recAcsRota VARCHAR(30) NULL,
+    recAcsIdc BIT NOT NULL
+    
+    CONSTRAINT FK_RecursoAcesso_TipoRecurso
+        FOREIGN KEY (tipRecCodi)
+        REFERENCES TipoRecurso(tipRecCodi)
+);
+
+CREATE TABLE Permissao (
+    prfAcsCodi SMALLINT NOT NULL, --PK
+    recAcsCodi INT NOT NULL, --PK
+    prmVisu BIT NOT NULL,
+    prmInse BIT NOT NULL,
+    prmEdit BIT NOT NULL,
+    prmExcl BIT NOT NULL
+    PRIMARY KEY (prfAcsCodi, recAcsCodi)
+    
+    CONSTRAINT FK_Permissao_PerfilAcesso
+        FOREIGN KEY (prfAcsCodi)
+        REFERENCES PerfilAcesso(prfAcsCodi),
+        
+    CONSTRAINT FK_Permissao_RecursoAcesso
+        FOREIGN KEY (recAcsCodi)
+        REFERENCES RecursoAcesso(recAcsCodi)
+);
+
+CREATE TABLE UsuarioPerfil (
+    usuCodi BIGINT NOT NULL, --PK
+    prfAcsCodi SMALLINT NOT NULL --PK
+    PRIMARY KEY (usuCodi, prfAcsCodi)
+    
+    CONSTRAINT FK_UsuarioPerfil_Usuario
+        FOREIGN KEY (usuCodi)
+        REFERENCES Usuario(usuCodi),
+        
+    CONSTRAINT FK_UsuarioPerfil_PerfilAcesso
+        FOREIGN KEY (prfAcsCodi)
+        REFERENCES PerfilAcesso(prfAcsCodi)
 );
