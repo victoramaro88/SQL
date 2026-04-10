@@ -192,6 +192,13 @@ CREATE TABLE Unidade (
         REFERENCES NivelUnidade(nivUniCodi)
 );
 
+INSERT INTO Unidade (uniCodi, uniPaiCodi, nivUniCodi, uniNome, uniSigl, uniIdc)
+VALUES
+(1, NULL, 1, 'COMANDO DO CORPO DE BOMBEIROS DA POLÍCIA MILITAR DO ESTADO DE SÃO PAULO', 'CCB', 1),
+(2, NULL, 2, 'COMANDO DE BOMBEIROS DO INTERIOR 2', 'CBI-2', 1),
+(3, NULL, 4, 'DÉCIMO TERCEIRO GRUPAMENTO DE BOMBEIROS', '13.GB', 1)
+;
+
 CREATE TABLE Usuario (
     usuCodi BIGINT NOT NULL PRIMARY KEY,
     uniCodi BIGINT NOT NULL, --FK
@@ -200,6 +207,7 @@ CREATE TABLE Usuario (
     usuDiRE VARCHAR(1) NOT NULL,
     usuNome VARCHAR(250) NOT NULL,
     usuNQRA VARCHAR(100) NOT NULL,
+    usuEmai VARCHAR(250) NOT NULL,
     usuIdc BIT NOT NULL
     
     CONSTRAINT FK_Usuario_Unidade
@@ -392,6 +400,13 @@ CREATE TABLE RecursoAcesso (
         REFERENCES TipoRecurso(tipRecCodi)
 );
 
+INSERT INTO RecursoAcesso (recAcsCodi, tipRecCodi, recAcsDesc, recAcsRota, recAcsIdc)
+VALUES
+(1, 2, 'MENU CHECKLIST', NULL, 1),
+(2, 2, 'MENU CADASTRO', NULL, 1),
+(3, 2, 'SUBMENU CADASTRO DE USUÁRIO', NULL, 1)
+;
+
 CREATE TABLE Permissao (
     prfAcsCodi SMALLINT NOT NULL, --PK
     recAcsCodi INT NOT NULL, --PK
@@ -410,6 +425,13 @@ CREATE TABLE Permissao (
         REFERENCES RecursoAcesso(recAcsCodi)
 );
 
+INSERT INTO Permissao (prfAcsCodi, recAcsCodi, prmVisu, prmInse, prmEdit, prmExcl)
+VALUES
+(1, 1, 1, 0, 0, 0), --> VISUALIZAR MENU CHECKLIST
+(1, 2, 1, 0, 0, 0), --> VISUALIZAR MENU CADASTRO
+(1, 3, 1, 0, 0, 0) --> VISUALIZAR SUBMENU CADASTRO DE USUÁRIO
+; 
+
 CREATE TABLE UsuarioPerfil (
     usuCodi BIGINT NOT NULL, --PK
     prfAcsCodi SMALLINT NOT NULL --PK
@@ -423,3 +445,72 @@ CREATE TABLE UsuarioPerfil (
         FOREIGN KEY (prfAcsCodi)
         REFERENCES PerfilAcesso(prfAcsCodi)
 );
+
+CREATE TABLE LoginUsuario (
+    logUsuCodi BIGINT NOT NULL PRIMARY KEY,
+    usuCodi BIGINT NOT NULL, --FK
+    logUsuPass VARCHAR(MAX) NOT NULL,
+    logUsuRst BIT NOT NULL,
+    logUsuIdc BIT NOT NULL
+    
+    CONSTRAINT FK_LoginUsuario_Usuario
+        FOREIGN KEY (usuCodi)
+        REFERENCES Usuario(usuCodi)
+);
+
+
+
+
+--> INSERTS AVULSOS PARA TESTES
+/*
+INSERT INTO Usuario (usuCodi, uniCodi, posGraCodi, usuNuRE, usuDiRE, usuNome, usuNQRA, usuEmai, usuIdc)
+VALUES
+(1, 3, 9, 141499, '2', 'VICTOR VALÉRIO JOAQUIM AMARO', 'AMARO', 'victoramaro@policiamilitar.sp.gov.br', 1)
+;
+
+INSERT INTO UsuarioPerfil (usuCodi, prfAcsCodi)
+VALUES
+(1, 1)
+;
+
+INSERT INTO LoginUsuario (logUsuCodi, usuCodi, logusuPass, logUsuRst, logUsuIdc)
+VALUES
+(1, 1, '123456', 0, 1)
+;
+*/
+
+
+
+
+SELECT
+	*
+FROM USUARIO USR
+JOIN UsuarioPerfil UP ON UP.usuCodi = USR.usuCodi 
+JOIN PerfilAcesso PERF ON PERF.prfAcsCodi = UP.prfAcsCodi 
+JOIN Permissao PERM ON PERM.prfAcsCodi = PERF.prfAcsCodi 
+JOIN RecursoAcesso REC ON REC.recAcsCodi = PERM.recAcsCodi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
