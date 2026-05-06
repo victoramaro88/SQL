@@ -1,5 +1,5 @@
 SELECT usuCodi, sesCodi, preAtiv, lojCodi, preEmai
-FROM DB_Visitatus_DEV_DEV.dbo.Presenca;
+FROM DB_Visitatus_DEV.dbo.Presenca;
 
 SELECT usuCodi, usuNome, usuNCIM, usuNasc, usuEmai, usuNCel, usuStat
 FROM DB_Visitatus_DEV.dbo.Usuario
@@ -39,11 +39,8 @@ JOIN DB_Visitatus_DEV.dbo.Permissao P2 ON PP.pemCodi = P2.pemCodi
 ORDER BY P.perNome 
 
 
-
-
 SELECT lojCodi, lojNome, lojNumL, lojLogo, lojLogr, lojNume, lojBair, lojStat, cidCodi, potCodi, ritCodi
 FROM DB_Visitatus_DEV.dbo.Loja;
-
 
 
 
@@ -73,92 +70,12 @@ ORDER BY ses.SesDtHr ASC;
 
 
 
-
-
-
-SELECT
-	ses.sesCodi,
-	--usr.usuNome,
-	usr.usuCodi,
-    ISNULL(perfUsr.perCodi, 0) AS PerfUsr,
-	--
-    ses.SesCodi,
-    ISNULL(ses.SesNume, 0) AS SesNume,
-    ses.SesDtHr,
-    ses.SesLibe,
-    ses.SesStat,
-    ses.SesNome
-    ,COUNT(pre.SesCodi) AS TotalPresenca
-FROM Sessao ses
-LEFT JOIN Presenca pre ON ses.SesCodi = pre.SesCodi
-LEFT JOIN Usuario usr ON usr.usuCodi = pre.usuCodi 
-LEFT JOIN PerfilUsuario perfUsr ON perfUsr.usuCodi = usr.usuCodi AND perfUsr.lojCodi = ses.lojCodi AND perfUsr.perCodi = 4
-LEFT JOIN Perfil perf ON perf.perCodi = perfUsr.perCodi
-WHERE ses.LojCodi = 1--@LojCodi
-  AND ses.SesDtHr >= GETDATE()
-GROUP BY 
-	ses.sesCodi,
- 	usr.usuCodi,
- 	perfUsr.perCodi,
-    ses.SesCodi,
-    ses.SesNume,
-    ses.SesDtHr,
-    ses.SesLibe,
-    ses.SesStat,
-    ses.SesNome    
-ORDER BY ses.SesDtHr ASC;
-
-
-
-
+--> RETORNAR AS ORIENTAÇÕES DA LOJA PARA AS TELAS DE EDIÇÃO E VISUALIZAÇÃO
 SELECT 
-	--* 
-	s.sesCodi,
-	s.sesDesc,
-	s.sesNome,
-	s.SesDtHr,
-	COUNT(s.sesCodi) AS TotalPresenca
-from Sessao s 
-LEFT JOIN Presenca p ON p.sesCodi = s.sesCodi
-WHERE s.LojCodi = 1--@LojCodi
-  AND s.SesDtHr >= GETDATE()
-GROUP BY 
-	s.sesCodi,
-	s.sesDesc,
-	s.sesNome,
-	s.SesDtHr
-ORDER BY s.SesDtHr ASC;
-
-
-
-
-SELECT * FROM Usuario usr
-LEFT JOIN PerfilUsuario perf ON usr.usuCodi = perf.usuCodi 
-WHERE perf.lojCodi = 1
-
-
-SELECT peUCodi, peUStat, perCodi, usuCodi, lojCodi
-FROM DB_Visitatus_DEV.dbo.PerfilUsuario
-where usuCodi = 50--in (1, 57)
---and lojCodi = 1
+	-- *
+	OL.orlCodi, OL.orlDesc, OL.orlDtHr, OL.orlStat, OL.lojCodi, OL.usuCodi
+	, Usr.usuNome 
+FROM DB_Visitatus_DEV.dbo.OrientacaoLoja OL
+JOIN DB_Visitatus_DEV.dbo.Usuario Usr ON Usr.usuCodi = OL.usuCodi
+WHERE OL.lojCodi = 1
 ;
-
-
-
-SELECT * FROM PerfilUsuario pu
-WHERE pu.usuCodi = 50
---ORDER BY pu.peUCodi DESC
-
-
-
-SELECT 
-	*
-/*	Ses.sesCodi, ses.sesNome, ses.sesDesc, ses.sesDtHr, ses.sesNume,
-	Loj.lojCodi, Loj.lojNome, Loj.lojNumL, Loj.lojLogo, loj.*/
-FROM DB_Visitatus_DEV.dbo.Sessao Ses WITH(NOLOCK)
-JOIN DB_Visitatus_DEV.dbo.Loja Loj WITH(NOLOCK) ON Ses.lojCodi = Loj.lojCodi
-JOIN DB_Visitatus_DEV.dbo.TipoSessao TipSes WITH(NOLOCK) ON Ses.tiSCodi = TipSes.tiSCodi
-;
-
-
-
