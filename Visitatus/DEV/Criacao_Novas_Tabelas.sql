@@ -29,3 +29,5 @@ CREATE TABLE DB_Visitatus_DEV.dbo.AusenciaSessao (
 SELECT * FROM DB_Visitatus_DEV.dbo.OrientacaoLoja;
 
 SELECT * FROM DB_Visitatus_DEV.dbo.AusenciaSessao;
+
+SELECT * FROM DB_Visitatus_DEV.dbo.Sessao where sesLibe = 0;

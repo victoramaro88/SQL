@@ -79,3 +79,13 @@ FROM DB_Visitatus_DEV.dbo.OrientacaoLoja OL
 JOIN DB_Visitatus_DEV.dbo.Usuario Usr ON Usr.usuCodi = OL.usuCodi
 WHERE OL.lojCodi = 1
 ;
+
+
+
+
+
+
+
+
+
+
