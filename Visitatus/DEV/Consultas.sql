@@ -84,7 +84,11 @@ WHERE OL.lojCodi = 1
 
 
 
-
+SELECT 
+	potCodi, potNome, potLogo, potRegu, potStat, potSigl
+FROM DB_Visitatus_DEV.dbo.Potencia
+WHERE potCodi = 5
+;
 
 
 
