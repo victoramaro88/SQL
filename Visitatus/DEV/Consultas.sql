@@ -39,8 +39,7 @@ JOIN DB_Visitatus_DEV.dbo.Permissao P2 ON PP.pemCodi = P2.pemCodi
 ORDER BY P.perNome 
 
 
-SELECT lojCodi, lojNome, lojNumL, lojLogo, lojLogr, lojNume, lojBair, lojStat, cidCodi, potCodi, ritCodi
-FROM DB_Visitatus_DEV.dbo.Loja;
+SELECT * FROM DB_Visitatus_DEV.dbo.Loja;
 
 
 
@@ -92,4 +91,16 @@ WHERE potCodi = 5
 
 
 
+SELECT ritCodi, ritNome, ritLogo, ritStat
+FROM DB_Visitatus_DEV.dbo.Rito;
 
+
+
+SELECT peUCodi, peUStat, perCodi, usuCodi, lojCodi
+FROM DB_Visitatus_DEV.dbo.PerfilUsuario
+where usuCodi = 1
+;
+
+SELECT peUCodi, peUStat, perCodi, usuCodi, lojCodi
+FROM DB_Visitatus_DEV.dbo.PerfilUsuario
+order by peUCodi desc
