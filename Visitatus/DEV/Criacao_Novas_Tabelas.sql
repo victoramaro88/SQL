@@ -1,6 +1,6 @@
 CREATE TABLE DB_Visitatus_DEV.dbo.OrientacaoLoja (
 	orlCodi bigint NOT NULL,
-	orlDesc varchar(2000) NULL,
+	orlDesc varchar(MAX) NULL,
 	orlDtHr datetime NOT NULL,
 	orlStat bit NOT NULL,
 	lojCodi bigint NOT NULL,

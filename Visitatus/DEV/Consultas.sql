@@ -39,9 +39,6 @@ JOIN DB_Visitatus_DEV.dbo.Permissao P2 ON PP.pemCodi = P2.pemCodi
 ORDER BY P.perNome 
 
 
-SELECT * FROM DB_Visitatus_DEV.dbo.Loja;
-
-
 
 
 --> CONSULTA DE PRESENTES CONFIRMADOS NA SESSÃO
@@ -104,3 +101,8 @@ where usuCodi = 1
 SELECT peUCodi, peUStat, perCodi, usuCodi, lojCodi
 FROM DB_Visitatus_DEV.dbo.PerfilUsuario
 order by peUCodi desc
+
+
+SELECT * FROM DB_Visitatus_DEV.dbo.Loja;
+
+SELECT * FROM DB_Visitatus_DEV.dbo.OrientacaoLoja;
