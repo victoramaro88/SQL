@@ -91,7 +91,7 @@ WHERE potCodi = 5
 SELECT ritCodi, ritNome, ritLogo, ritStat
 FROM DB_Visitatus_DEV.dbo.Rito;
 
-
+SELECT * FROM Perfil;
 
 SELECT peUCodi, peUStat, perCodi, usuCodi, lojCodi
 FROM DB_Visitatus_DEV.dbo.PerfilUsuario
@@ -103,6 +103,10 @@ FROM DB_Visitatus_DEV.dbo.PerfilUsuario
 order by peUCodi desc
 
 
-SELECT * FROM DB_Visitatus_DEV.dbo.Loja;
+SELECT * FROM DB_Visitatus_DEV.dbo.Loja
+ORDER BY lojCodi DESC
+;
 
-SELECT * FROM DB_Visitatus_DEV.dbo.OrientacaoLoja;
+SELECT * FROM DB_Visitatus_DEV.dbo.OrientacaoLoja
+WHERE lojCodi = 204
+;

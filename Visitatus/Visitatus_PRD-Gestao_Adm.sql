@@ -53,6 +53,10 @@ SELECT * FROM DB_Visitatus.dbo.PerfilUsuario;
 
 SELECT * FROM DB_Visitatus.dbo.GestaoAdministrativa;
 
+SELECT * FROM DB_Visitatus.dbo.GestaoCargos;
+
+SELECT * FROM DB_Visitatus.dbo.GestaoAdministrativa where lojcodi = 45; --JERUSALÉM
+
 SELECT * FROM DB_Visitatus.dbo.Loja;
 
 
@@ -60,7 +64,7 @@ SELECT * FROM DB_Visitatus.dbo.Sessao;
 
 -- SELECT PARA TRAZER OS OFICIAIS DA GESTÃO ADMINISTRATIVA
 SELECT
-	L.lojCodi, L.lojNome, L.lojNumL,
+	GA.gstAdmCodi, L.lojCodi, L.lojNome, L.lojNumL,
 	GA.gstAdmNome, GA.gstAdmDtIn, GA.gstAdmDtFi, GA.gstAdmStat,
 	C.carNome, U.usuNome
 FROM DB_Visitatus.dbo.Loja L
@@ -68,9 +72,16 @@ JOIN DB_Visitatus.dbo.GestaoAdministrativa GA ON GA.lojCodi = L.lojCodi
 JOIN DB_Visitatus.dbo.GestaoCargos GC ON GC.gstAdmCodi = GA.gstAdmCodi
 JOIN DB_Visitatus.dbo.Cargos C ON C.carCodi = GC.carCodi 
 JOIN DB_Visitatus.dbo.Usuario U ON U.usuCodi = GC.usuCodi 
-WHERE L.lojCodi = 15
+WHERE L.lojCodi = 1
 	AND GA.gstAdmStat = 1	
 	AND (GA.gstAdmDtIn <= CAST(GETDATE() AS DATE) AND GA.gstAdmDtFi >= CAST(GETDATE() AS DATE))
 ORDER BY GA.gstAdmDtFi DESC
 
 -----------------------------------------------------------------------------------------------------------
+
+SELECT * FROM 
+DB_Visitatus.dbo.PerfilUsuario PU
+JOIN DB_Visitatus.dbo.Usuario U ON U.usuCodi = PU.usuCodi 
+WHERE PU.lojCodi = 241
+
+SELECT * FROM Loja l WHERE l.lojCodi = 241
