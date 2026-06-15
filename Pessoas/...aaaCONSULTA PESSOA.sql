@@ -1,8 +1,8 @@
 -- Tabela para consultar de Militar Ativo, Agregado e Inativo
 SELECT * FROM DB_EFETIVO.SchEfetivo.Efetivo
-WHERE RE = 129613
+--WHERE RE = 129613
 --WHERE CPF = '15739843707'
---WHERE NOME LIKE '%NAVARRO%'
+WHERE NOME LIKE '%joao carlos de carvalho%'
 
 -- Tabela para consultar Militar em qualquer situação e Funcionário Civil cadastrado na Base de Dados da PM 
 SELECT * FROM DB_EFETIVO.SchEfetivo.RHCB
