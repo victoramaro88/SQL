@@ -2,11 +2,25 @@ SELECT * FROM DB_Visitatus.dbo.Usuario
 WHERE usuNome LIKE '%Mathias%'
 ORDER BY usuNome;
 
+SELECT * FROM DB_Visitatus.dbo.Perfil --WHERE perCodi = 4
+
 SELECT * FROM DB_Visitatus.dbo.PerfilUsuario
 where usucodi IN (43);
 --ORDER BY peUCodi DESC
 ;
 
+SELECT * FROM DB_Visitatus.dbo.Usuario USU
+JOIN DB_Visitatus.dbo.PerfilUsuario PU ON PU.usuCodi = USU.usuCodi 
+JOIN DB_Visitatus.dbo.Loja L ON L.lojCodi = PU.lojCodi 
+WHERE L.lojCodi = 1 AND PU.perCodi = 4;
+
+/*
+GESTÃO 2026/2027
+VM (1) - BINA: 42
+1V (2) - FERNANDINHO: 21
+2V (3) - CESAR TADEU: 13
+SEC (4) - PEDRO LUIZ: 36
+*/
 --==============================================================================================================================
 
 
@@ -53,9 +67,9 @@ SELECT * FROM DB_Visitatus.dbo.PerfilUsuario;
 
 SELECT * FROM DB_Visitatus.dbo.GestaoAdministrativa;
 
-SELECT * FROM DB_Visitatus.dbo.GestaoCargos;
+SELECT * FROM DB_Visitatus.dbo.GestaoCargos WHERE gstAdmCodi = 3;
 
-SELECT * FROM DB_Visitatus.dbo.GestaoAdministrativa where lojcodi = 45; --JERUSALÉM
+SELECT * FROM DB_Visitatus.dbo.GestaoAdministrativa where lojcodi = 1;
 
 SELECT * FROM DB_Visitatus.dbo.Loja;
 
@@ -79,9 +93,3 @@ ORDER BY GA.gstAdmDtFi DESC
 
 -----------------------------------------------------------------------------------------------------------
 
-SELECT * FROM 
-DB_Visitatus.dbo.PerfilUsuario PU
-JOIN DB_Visitatus.dbo.Usuario U ON U.usuCodi = PU.usuCodi 
-WHERE PU.lojCodi = 241
-
-SELECT * FROM Loja l WHERE l.lojCodi = 241
