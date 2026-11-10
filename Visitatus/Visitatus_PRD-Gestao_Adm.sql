@@ -59,8 +59,24 @@ where ritCodi = 3
 
 SELECT * FROM DB_Visitatus.dbo.GestaoCargos; 
 
-SELECT * FROM DB_Visitatus.dbo.Usuario 
-where usuNCIM = '274536'
+SELECT * FROM DB_Visitatus.dbo.Usuario
+--where usuNCIM = '274536'
+where usuNCIM IN(
+'332466',
+'319000',
+'319002',
+'318991',
+'318993',
+'345429',
+'286041',
+'359467',
+'319087',
+'313824',
+'339636',
+'339639',
+'319010',
+'339638'
+)
 order by usuNome;
 
 SELECT * FROM DB_Visitatus.dbo.PerfilUsuario;
@@ -93,3 +109,27 @@ ORDER BY GA.gstAdmDtFi DESC
 
 -----------------------------------------------------------------------------------------------------------
 
+SELECT
+	Usr.usuCodi, Usr.usuNCIM, Usr.usuNome,
+	Loj.lojNome, Loj.lojNumL,
+	PU.perCodi
+FROM DB_Visitatus.dbo.Usuario Usr
+JOIN DB_Visitatus.dbo.PerfilUsuario PU ON PU.usuCodi = Usr.usuCodi
+JOIN DB_Visitatus.dbo.Loja Loj ON Loj.lojCodi = PU.lojCodi 
+where usuNCIM IN(
+'332466',
+'319000',
+'319002',
+'318991',
+'318993',
+'345429',
+'286041',
+'359467',
+'319087',
+'313824',
+'339636',
+'339639',
+'319010',
+'339638'
+)
+order by usuNome;
